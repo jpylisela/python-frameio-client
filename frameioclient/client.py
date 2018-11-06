@@ -136,6 +136,28 @@ class FrameioClient(object):
     uploader = FrameioUploader(asset, file)
     uploader.upload()
 
+  def add_version_to_asset(self, destination_id, **kwargs):
+    """
+    Create an asset.
+
+    :Args:
+      parent_asset_id (string): The main/destination Asset or Version Stack.
+    :Kwargs:
+      kwargs: additional request parameters.
+      	next_asset_id: The uuid of the source Asset being added to the stack.
+
+      Example::
+
+        client.add_version_to_asset(
+          destination_id="123",
+          next_asset_id="234"
+        )
+    """
+
+    endpoint = '/assets/{}/version'.format(destination_id)
+
+    return self._api_call('post', endpoint, payload=kwargs)
+
   def get_comments(self, asset_id):
     """
     Get an asset's comments.
